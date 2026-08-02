@@ -1,5 +1,15 @@
 use crate::errors::CrateResult;
 use std::fs;
+use tokio::process::Command as AsyncCommand;
+
+pub async fn exec_external(program: &str, args: &[String]) -> CrateResult<()>{
+    let mut child = AsyncCommand::new(program)
+        .args(args)
+        .spawn()?;
+
+    child.wait().await?;
+    Ok(())
+}
 
 pub fn pwd() -> CrateResult<String> {
     let current_dir = std::env::current_dir()?;
@@ -41,5 +51,10 @@ pub fn cat(path: &str) -> CrateResult<String>{
 
 pub fn mkdir(path: &str) -> CrateResult<()>{
     fs::create_dir(path)?;
+    Ok(())
+}
+
+pub fn rmdir(path: &str) -> CrateResult<()>{
+    fs::remove_dir(path)?;
     Ok(())
 }

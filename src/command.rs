@@ -11,6 +11,8 @@ pub enum Command {
     Rm(String),
     Cat(String),
     Mkdir(String),
+    Rmdir(String),
+    Exec{program: String, args: Vec<String>},
 }
 
 impl TryFrom<&str> for Command{
@@ -75,8 +77,19 @@ impl TryFrom<&str> for Command{
                 else{
                     Ok(Command::Mkdir(split_value[1..].join(" ")))
                 }
-            }
-            _ => Err(anyhow!("Unknown command")),
+            },
+            "rmdir" => {
+                if split_value.len() <2{
+                    return Err(anyhow!("rmdir command requires an argument"));
+                }
+                else{
+                    Ok(Command::Rmdir(split_value[1..].join(" ")))
+                }
+            },
+           program => Ok(Command::Exec { 
+            program: program.to_string(), 
+            args: split_value[1..].iter().map(|s| s.to_string()).collect()
+         }),
         }
     }
 }

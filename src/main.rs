@@ -85,6 +85,13 @@ async fn handle_new_line(line: &str) -> CrateResult<Command>{
         Command::Mkdir(s) =>{
             helpers::mkdir(s)?;
         }
+        Command::Rmdir(s) =>{
+            helpers::rmdir(s)?;
+        }
+        Command::Exec { program, args } => {
+            // Handle external command execution
+            helpers::exec_external(program, args).await?;
+        }
         _ => {}
     }
     Ok(command)
