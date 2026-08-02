@@ -1,0 +1,16 @@
+# Rust build artifacts (compiled binaries, dependencies, debug info)
+/target/
+
+# Cargo lockfile (Keep included for binaries/applications, optional to ignore for libraries)
+# Cargo.lock
+
+# macOS system files
+.DS_Store
+
+# IDE and Editor configurations
+.vscode/
+.idea/
+*.rs.bk
+
+# Environment files
+.env
