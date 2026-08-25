@@ -1,7 +1,7 @@
 use anyhow::anyhow;
 
 #[derive(Clone, Debug)]
-pub enum Command {
+pub enum Command { //all commands that the shell can handle
     Exit,
     Echo(String),
     Ls,
@@ -12,15 +12,17 @@ pub enum Command {
     Cat(String),
     Mkdir(String),
     Rmdir(String),
+    //fallback for any other command that is not recognized by the shell, will be executed as a program by the OS
     Exec{program: String, args: Vec<String>},
 }
 
+// Implement TryFrom<&str> for Command to parse a string into a Command enum variant
 impl TryFrom<&str> for Command{
     type Error = anyhow::Error;
     fn try_from(value: &str) ->Result<Self, Self::Error>{
         let split_value: Vec<&str> = 
         value.split_whitespace().collect();
-
+        //extract the first word as command name
         let command_name = match split_value.first(){
             Some(cmd) => cmd,
             None => return Err(anyhow!("Empty input!")),
