@@ -32,7 +32,7 @@ impl TryFrom<&str> for Command {
             "exit" => Ok(Command::Exit),
             "echo" => {
                 if split_value.len() < 2 {
-                    return Err(anyhow!("Echo command requires an argument"));
+                     Err(anyhow!("Echo command requires an argument"))
                 } else {
                     Ok(Command::Echo(split_value[1..].join(" ")))
                 }
@@ -41,42 +41,42 @@ impl TryFrom<&str> for Command {
             "pwd" => Ok(Command::Pwd),
             "cd" => {
                 if split_value.len() < 2 {
-                    return Err(anyhow!("Cd command requires an argument"));
+                     Err(anyhow!("Cd command requires an argument"))
                 } else {
                     Ok(Command::Cd(split_value[1..].join(" ")))
                 }
             }
             "touch" => {
                 if split_value.len() < 2 {
-                    return Err(anyhow!("Touch command requires an argument"));
+                     Err(anyhow!("Touch command requires an argument"))
                 } else {
                     Ok(Command::Touch(split_value[1..].join(" ")))
                 }
             }
             "rm" => {
                 if split_value.len() < 2 {
-                    return Err(anyhow!("Rm command requires an argument"));
+                     Err(anyhow!("Rm command requires an argument"))
                 } else {
                     Ok(Command::Rm(split_value[1..].join(" ")))
                 }
             }
             "cat" => {
                 if split_value.len() < 2 {
-                    return Err(anyhow!("Cat command requires an argument"));
+                     Err(anyhow!("Cat command requires an argument"))
                 } else {
                     Ok(Command::Cat(split_value[1..].join(" ")))
                 }
             }
             "mkdir" => {
                 if split_value.len() < 2 {
-                    return Err(anyhow!("mkdir command requires an argument"));
+                     Err(anyhow!("mkdir command requires an argument"))
                 } else {
                     Ok(Command::Mkdir(split_value[1..].join(" ")))
                 }
             }
             "rmdir" => {
                 if split_value.len() < 2 {
-                    return Err(anyhow!("rmdir command requires an argument"));
+                     Err(anyhow!("rmdir command requires an argument"))
                 } else {
                     Ok(Command::Rmdir(split_value[1..].join(" ")))
                 }

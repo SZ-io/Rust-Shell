@@ -30,8 +30,8 @@ fn spawn_user_input_handler() -> JoinHandle<CrateResult<()>> {
         // wrap given stdout in a buffered writer to improve performance
         let mut stdout = tokio::io::BufWriter::new(stdout);
 
-        stdout.write(pwd()?.as_bytes()).await?;
-        stdout.write(b">").await?;
+        stdout.write_all(pwd()?.as_bytes()).await?;
+        stdout.write_all(b">").await?;
         stdout.flush().await?;
 
         while let Ok(Some(line)) = reader.next_line().await {
@@ -50,8 +50,8 @@ fn spawn_user_input_handler() -> JoinHandle<CrateResult<()>> {
             } else {
                 eprintln!("Error parsing command: {}", command.err().unwrap());
             }
-            stdout.write(pwd()?.as_bytes()).await?;
-            stdout.write(b">").await?;
+            stdout.write_all(pwd()?.as_bytes()).await?;
+            stdout.write_all(b">").await?;
             stdout.flush().await?;
         }
         Ok(())
@@ -71,13 +71,13 @@ async fn handle_new_line(line: &str) -> CrateResult<Command> {
             helpers::cd(s)?;
         }
         Command::Touch(s) => {
-            helpers::touch(&s)?;
+            helpers::touch(s)?;
         }
         Command::Rm(s) => {
-            helpers::rm(&s)?;
+            helpers::rm(s)?;
         }
         Command::Cat(s) => {
-            let contents = helpers::cat(&s)?;
+            let contents = helpers::cat(s)?;
             println!("{}", contents);
         }
         Command::Mkdir(s) => {
